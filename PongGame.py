@@ -12,6 +12,7 @@ wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)
 
+
 # Paddle 1
 paddle_a = turtle.Turtle()
 paddle_a.speed(0)
@@ -20,6 +21,7 @@ paddle_a.color("white")
 paddle_a.shapesize(stretch_wid=5, stretch_len=0.5)
 paddle_a.penup()
 paddle_a.goto(-350,0)
+
 
 # Paddle 2
 paddle_b = turtle.Turtle()
@@ -30,17 +32,18 @@ paddle_b.shapesize(stretch_wid=5, stretch_len=0.5)
 paddle_b.penup()
 paddle_b.goto(350,0)
 
+
 # Ball
 ball = turtle.Turtle()
 ball.speed(0)
 ball.shape("circle")
+ball.shapesize(0.5,0.5)
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
-ball.dx = 0.1        
-ball.dy = 0.1
+ball.dx = 0.5
+ball.dy = 0.5
 
-# Ball Mechanics
 
 
 # Function to move Paddle A
@@ -65,15 +68,14 @@ def paddle_b_down():
     paddle_b.sety(y)
 
 
-# Keyboard Binds
 
+# Keyboard Binds
 wn.listen()
 wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
 
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
-
 
 
 
@@ -101,4 +103,13 @@ while True:
     
     if ball.xcor() < -390:
         ball.goto(0, 0)
-        ball.dx *= -1                                                                
+        ball.dx *= -1
+
+    # Paddle & Ball Collision
+    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+        ball.setx(340)
+        ball.dx *= -1
+
+    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+        ball.setx(-340)
+        ball.dx *= -1
